@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Store {
@@ -20,8 +19,32 @@ public class Store {
         }
         System.out.println("You have no more attempts, back to main menu");
         return false;
-
     }
+
+    /*-------TRIED A METHOD---------DOES NOT WORK
+    public static void updateComputers(Computer[] inventory, Scanner kb) {
+
+        System.out.println("Which computer would you like to update?");
+        int computerIndex = kb.nextInt();
+        if (computerIndex < 0 || computerIndex >= inventory.length || inventory[computerIndex] == null) {
+            System.out.println("This computer cannot be found. Would you like to enter another computer ? (Y/N)");
+            String answer = kb.next();
+            if (answer.equalsIgnoreCase("N")) {
+                return;
+            }
+        } else {
+            Computer computer = inventory[updateComputers()];
+            System.out.println("Current information of the computer: \n" +
+                    "\tComputer # " + computerIndex + "\n" +
+                    "\tBrand: " + computer.getBrand() + "\n" +
+                    "\tModel: " + computer.getModel() + "\n" +
+                    "\tSN: " + computer.getSerialNumber() + "\n" +
+                    "\tPrice: " + computer.getPrice() + "\n");
+        }
+    }*
+
+
+     */
 
     // case 3 public static findComputersBy(String brand){}
 
@@ -35,6 +58,7 @@ public class Store {
         System.out.println("Welcome to Pargol Computer Store!");
         int maxComputers = 0;
         final String password = "password";
+        boolean returnToMainMenu = false;
 
 
         while (maxComputers < 1) {
@@ -93,12 +117,13 @@ public class Store {
                                 // Input computer information (brand, model, price) and add to the array.
                             }
                             System.out.println("Computers added to inventory.");
-                            System.out.println("Here is your store: ");
+                            System.out.println("Here is your store: \n");
                             for (Computer computer : inventory) {
                                 if (computer != null) {
                                     System.out.println("Brand: " + computer.getBrand());
                                     System.out.println("Model: " + computer.getModel());
-                                    System.out.println("Price: " + computer.getPrice());
+                                    System.out.println("Price: " + computer.getPrice() + " $");
+                                    System.out.println("Serial Number: " + computer.getSerialNumber());
                                     System.out.println();
                                 }
                             }
@@ -114,9 +139,78 @@ public class Store {
                         System.out.println("Which computer would you like to update?");
                         int updateComputer = kb.nextInt();
 
+                        if (updateComputer < 0 || updateComputer >= inventory.length || inventory[updateComputer] == null) {
+                            System.out.println("This computer cannot be found. Would you like to enter another computer ? (Y/N)");
+                            String answer = kb.next();
+                            if (answer.equalsIgnoreCase("N")) {
+                                return;
+                            }
+                        } else {
+                            Computer computer = inventory[updateComputer];
+                            System.out.println("Current information of the computer: \n" +
+                                    "\tComputer # " + updateComputer + "\n" +
+                                    "\tBrand: " + computer.getBrand() + "\n" +
+                                    "\tModel: " + computer.getModel() + "\n" +
+                                    "\tSN: " + computer.getSerialNumber() + "\n" +
+                                    "\tPrice: " + computer.getPrice() + "\n");
 
+                            do {
+                                System.out.println("""
+                                        What information would you like to change?
+                                        1.\tBrand
+                                        2.\tModel
+                                        3.\tSerial Number
+                                        4.\tPrice
+                                        5.\tQuit
+                                        Enter your choice:
+                                        """);
+                                int choiceMenu2 = kb.nextInt();
+                                if (choiceMenu2 != 1 && choiceMenu2 != 2 && choiceMenu2 != 3 && choiceMenu2 != 4 && choiceMenu2 != 5) {
+                                    System.out.println("Your choice is not included in the menu!");
+                                }
+                                switch (choiceMenu2) {
+                                    case 1:
+                                        System.out.println("Enter the updated information of for your computer: ");
+                                        kb.nextLine();
+                                        System.out.println("Brand: ");
+                                        String brand = kb.nextLine();
+                                        computer.setBrand(brand);
+                                        break;
+
+                                    case 2:
+                                        System.out.println("Enter the updated information of for your computer: ");
+                                        kb.nextLine();
+                                        System.out.println("Model: ");
+                                        String model = kb.nextLine();
+                                        computer.setModel(model);
+                                        break;
+
+                                    case 3:
+                                        System.out.println("Enter the updated information of for your computer: ");
+                                        kb.nextLine();
+                                        System.out.println("SN: ");
+                                        Long serialNum = kb.nextLong();
+                                        computer.setSerialNumber(serialNum);
+                                        break;
+
+                                    case 4:
+                                        System.out.println("Enter the updated information of for your computer: ");
+                                        kb.nextLine();
+                                        System.out.println("Price: ");
+                                        double price = kb.nextDouble();
+                                        computer.setPrice(price);
+                                        break;
+
+                                    case 5:
+                                        System.out.println("Thank you !");
+                                        return;
+                                }
+                            } while (true);
+
+                        }
                     }
                 }
+
 
                 case 4 -> {
                 }
@@ -125,6 +219,7 @@ public class Store {
                     System.out.println("Thank you for using my program! Goodbye!");
                     System.exit(5);
                 }
+
             }
 
 
