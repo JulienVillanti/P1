@@ -79,15 +79,16 @@ public class Store {
                         int numOfComputers = kb.nextInt();
 
                         if (numOfComputers <= maxComputers) {
+                            System.out.println("Please enter your computer's specifications: ");
                             kb.nextLine();
                             for (int i = 0; i < numOfComputers; i++) {
-                                System.out.println("Please enter your computer's specifications: ");
                                 System.out.println("Brand: ");
                                 String brand = kb.nextLine();
                                 System.out.println("Model: ");
                                 String model = kb.nextLine();
                                 System.out.println("Price: ");
                                 double price = kb.nextDouble();
+                                kb.nextLine();
                                 inventory[i] = new Computer(brand, model, price);
                                 // Input computer information (brand, model, price) and add to the array.
                             }
