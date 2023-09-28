@@ -46,7 +46,27 @@ public class Store {
 
      */
 
-    // case 3 public static findComputersBy(String brand){}
+    public static void findComputersBy(Computer[] inventory, String brandSearch) {
+        boolean foundBrand = false;
+        for (int i = 0; i < inventory.length; i++) {
+            if (inventory[i] != null && inventory[i].getBrand().equals(brandSearch)) {
+                System.out.println("Computer # " + i + " :");
+                System.out.println("Brand: " + inventory[i].getBrand());
+                System.out.println("Model: " + inventory[i].getModel());
+                System.out.println("Price: " + inventory[i].getPrice());
+                System.out.println("Serial Number: " + inventory[i].getSerialNumber());
+                System.out.println();
+                foundBrand = true;
+
+            }
+        }
+        if (!foundBrand) {
+            System.out.println("There is no " + brandSearch + " computers with that brand in our inventory");
+        }
+
+
+    }
+
 
     // case 4 public static findCheaperThan(double value){}
 
@@ -58,7 +78,6 @@ public class Store {
         System.out.println("Welcome to Pargol Computer Store!");
         int maxComputers = 0;
         final String password = "password";
-        boolean returnToMainMenu = false;
 
 
         while (maxComputers < 1) {
@@ -209,6 +228,12 @@ public class Store {
 
                         }
                     }
+                }
+                case 3 -> {
+                    System.out.println("Please enter the brand of the computer you would like to search for: ");
+                    String brandSearch = kb.next();
+                    findComputersBy(inventory, brandSearch);
+
                 }
 
 
