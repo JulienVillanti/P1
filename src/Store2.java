@@ -41,7 +41,7 @@ public class Store2 {
         }
     }
 
-//------Writing the method for finding computers under a certain price
+    //------Writing the method for finding computers under a certain price
     public static void findCheaperThan(Computer[] inventory, double checkPrice) {
         boolean priceCompare = false;
         for (int i = 0; i < inventory.length; i++) {
@@ -56,6 +56,13 @@ public class Store2 {
         }
     }
 
+    public static void negativeNum(double price) {
+        boolean negNum = false;
+        if (price < 0) {
+            System.out.println("This value cannot be negative!");
+        }
+    }
+
     public static void main(String[] args) {
         //Computer c1 = new Computer("Apple", "MacPro", 3000);
         //c1.displayComputer(c1);
@@ -63,6 +70,7 @@ public class Store2 {
         System.out.println("Welcome to Pargol Computer Store!");
         int maxComputers = 0;
         final String password = "password";
+        int compuNum = 1;
 
 
         while (maxComputers < 1) {
@@ -101,20 +109,32 @@ public class Store2 {
                     if (checkPassword1(password)) {
                         System.out.println("How many computers would you like to add?");
                         int numOfComputers = kb.nextInt();
-
+                        while (numOfComputers < 0) {
+                            System.out.println("This cannot be a negative number. Please enter the number again: ");
+                            numOfComputers = kb.nextInt();
+                        }
+                        double price = 0;
                         if (numOfComputers <= maxComputers) {
                             System.out.println("Please enter your computer's specifications: ");
                             kb.nextLine();
+
                             for (int i = 0; i < numOfComputers; i++) {
+                                System.out.println("Computer # " + compuNum);
                                 System.out.println("Brand: ");
                                 String brand = kb.nextLine();
                                 System.out.println("Model: ");
                                 String model = kb.nextLine();
-                                System.out.println("Price: ");
-                                double price = kb.nextDouble();
+                                //System.out.println("Price: ");
+                                do {
+                                    System.out.println("Price: ");
+                                    price = kb.nextDouble();
+                                    if (price < 0) {
+                                        System.out.println("Price cannot be negative. Please enter a non-negative price.");
+                                    }
+                                } while (price < 0);
                                 kb.nextLine();
                                 inventory[i] = new Computer(brand, model, price);
-                                // Input computer information (brand, model, price) and add to the array.
+                                compuNum++;
                             }
                             System.out.println("Computers added to inventory.");
                             System.out.println("Here is your store: \n");
@@ -125,15 +145,19 @@ public class Store2 {
                                     System.out.println("Price: " + computer.getPrice() + " $");
                                     System.out.println("Serial Number: " + computer.getSerialNumber());
                                     System.out.println();
+                               /* } else if (numOfComputers < inventory.length) {
+                                    System.out.println("You are trying to add more computers than your inventory can contain!");
+                                    break;*/
                                 }
                             }
                         } else {
-                            System.out.println("There is not enough space to add that computer. You can only add +" + maxComputers + " computers to the list.");
+                            System.out.println("There is not enough space to add that computer. You can only add " + (inventory.length - compuNum) + " computers to the list.");
 
                         }
-                    }
-                }
 
+                    }
+
+                }
                 case 2 -> {
                     if (checkPassword1(password)) {
                         System.out.println("Which computer would you like to update?");
@@ -206,7 +230,6 @@ public class Store2 {
                                         return;
                                 }
                             } while (true);
-
                         }
                     }
                 }
